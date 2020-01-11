@@ -13,9 +13,11 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      success: '',
-      error: ''
+      success: 'default-success-message',
+      error: 'default-error-message'
     };
+
+    this.feed = this.feed.bind(this);
   }
 
   feed() {
@@ -23,11 +25,13 @@ class App extends React.Component {
     .then(response => response.json())
     .then(JsonData => {
       console.log(JsonData);
-      this.setState({success: JsonData.data})
+      this.setState({success: JsonData.data.payload.data})
+      console.log(this.state.success)
     })
-    .catch(function(err) {
-      console.log(err);
-      this.setState({error: err})
+    .catch(JsonData => {
+      console.log(JsonData);
+      this.setState({error: JsonData.data.payload.data})
+      console.log(this.state.error)
     });
   }
 
@@ -47,14 +51,19 @@ class App extends React.Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         </Navbar>
-    
+
         <Container className="container-full">
           <Button 
             variant="primary"
             onClick={this.feed}
           >Feed Now</Button>
+          <br/>
+          <session className="text-light">
+            <p> {this.state.success} </p>
+            <p> {this.state.error} </p>
+          </session>
         </Container>
-        
+   
         <footer>
           <p className="text-light">@FoodieBear</p>
         </footer>
