@@ -13,10 +13,10 @@ app.use(pino);
 
 const path = require('path')
 // Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, 'client/build')))
+app.use(express.static(path.join(__dirname, 'react-frontend/build')))
 // Anything that doesn't match the above, send back index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'))
+  res.sendFile(path.join(__dirname + '/react-frontend/build/index.html'))
 })
 
 app.get('/api/feed', (req, res) => {
@@ -53,5 +53,5 @@ app.get('/api/feed', (req, res) => {
 // Choose the port and start the server
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
-  console.log(`React-Express running on port ${PORT}`)
+  console.log(`React-Express running on port ${PORT}...`)
 })
