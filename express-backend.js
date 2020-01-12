@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const pino = require('express-pino-logger')();
+//const pino = require('express-pino-logger')();
 const connectionString = process.env.IOTHUB_CONNECTION_STRING;
 const targetDevice = process.env.TARGET_DEVICE;
 

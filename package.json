@@ -2,10 +2,10 @@
   "name": "nodejswithreacttogether",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "express-backend",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node express-backend.js"
   },
   "author": "",
   "license": "ISC",
