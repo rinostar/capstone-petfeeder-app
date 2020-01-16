@@ -3,6 +3,7 @@ require('./db-conn.js');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const connectionString = process.env.IOTHUB_CONNECTION_STRING;
 const targetDevice = process.env.TARGET_DEVICE;
 
@@ -57,7 +58,7 @@ app.get('/api/feed/', (req, res) => {
     });
 });
 
-// ********** testing
+// ********** testing: GET & POST for logs
 app.get('/api/logs', (req, res, next) => {
   Log.find({}, (err, logs) => {
     if (err) next(err);
