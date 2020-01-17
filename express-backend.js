@@ -11,6 +11,7 @@ const targetDevice = process.env.TARGET_DEVICE;
 const app = express();
 // Serve our api route
 app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 // Mount routes to get and post in DB
 // app.use('/api/logs/', require('./routes/logs-route'));
 // ****** testing
@@ -24,6 +25,27 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/react-frontend/build/index.html'))
 });
 
+// ********** testing: GET & POST for logs
+app.get('/api/logs', (req, res, next) => {
+  Log.find({}, (err, logs) => {
+    if (err) next(err);
+    else res.json(logs);
+  });
+});
+
+app.post('/api/logs/add', (req, res, next) => {
+  console.log(req.body)
+  const newLog = new Log({
+    device: req.body.device,
+    fedTime: req.body.fedTime,
+  });
+  newLog.save(err => {
+    if (err) next(err);
+    else res.json({ newLog, msg: 'Log successfully saved!' });
+  });
+});
+
+// endpoints for feed request to device through IoT hub
 app.get('/api/feed/', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
@@ -56,26 +78,6 @@ app.get('/api/feed/', (req, res) => {
         res.send(JSON.stringify({ data: result }));
       }
     });
-});
-
-// ********** testing: GET & POST for logs
-app.get('/api/logs', (req, res, next) => {
-  Log.find({}, (err, logs) => {
-    if (err) next(err);
-    else res.json(logs);
-  });
-});
-
-app.post('/api/logs/add', (req, res, next) => {
-  console.log(req.body)
-  const newLog = new Log({
-    device: req.body.device,
-    fedTime: req.body.fedTime,
-  });
-  newLog.save(err => {
-    if (err) next(err);
-    else res.json({ newLog, msg: 'Log successfully saved!' });
-  });
 });
 
 // Choose the port and start the server

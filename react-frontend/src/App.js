@@ -21,24 +21,45 @@ class App extends React.Component {
     this.state = {
       success: "",
       error: "",
-      logs: []
+      logs: [],
+      deviceId: "PyPi"
     };
 
     this.feed = this.feed.bind(this);
+  }
+
+  createLog(timeStamp) {
+    let prms = new URLSearchParams({
+      device: this.state.deviceId,
+      fedTime: timeStamp
+    }).toString();
+
+    fetch(
+      "/api/logs/add",
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: prms
+        // encodeURIComponent(JSON.stringify({
+        //   "device": this.state.deviceId,
+        //   "fedTime": timeStamp
+        // }))
+      }
+    );
+    console.log(Response);
   }
 
   feed() {
     fetch("/api/feed/")
     .then(response => response.json())
     .then(JsonData => {
-      console.log(JsonData);
       this.setState({success: JsonData.data.payload.data})
-      console.log(this.state.success)
+      this.createLog(JsonData.data.payload.data)
     })
     .catch(JsonData => {
-      console.log(JsonData);
       this.setState({error: JsonData.data.payload.data})
-      console.log(this.state.error)
     });
   }
 
