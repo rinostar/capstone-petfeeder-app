@@ -1,17 +1,21 @@
 require('dotenv').config();
+require('./db-conn.js');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-//const pino = require('express-pino-logger')();
+
 const connectionString = process.env.IOTHUB_CONNECTION_STRING;
 const targetDevice = process.env.TARGET_DEVICE;
 
 // Create the server
 const app = express();
-// Serve our api route /cow that returns a custom talking text cow
+// Serve our api route
 app.use(bodyParser.urlencoded({ extended: false }));
-// for debugging 
-//app.use(pino); 
+// app.use(bodyParser.json());
+// Mount routes to get and post in DB
+// app.use('/api/logs/', require('./routes/logs-route'));
+// ****** testing
+const Log = require('./models/log_model');
 
 const path = require('path');
 // Serve static files from the React frontend app
@@ -21,9 +25,28 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/react-frontend/build/index.html'))
 });
 
+// ********** testing: GET & POST for logs
+app.get('/api/logs', (req, res, next) => {
+  Log.find({}, (err, logs) => {
+    if (err) next(err);
+    else res.json(logs);
+  });
+});
+
+app.post('/api/logs/add', (req, res, next) => {
+  console.log(req.body)
+  const newLog = new Log({
+    device: req.body.device,
+    fedTime: req.body.fedTime,
+  });
+  newLog.save(err => {
+    if (err) next(err);
+    else res.json({ newLog, msg: 'Log successfully saved!' });
+  });
+});
+
+// endpoints for feed request to device through IoT hub
 app.get('/api/feed/', (req, res) => {
-    //res.setHeader('Content-Type', 'application/json');
-    //res.send(JSON.stringify({ data: "HELLO" }));
     res.setHeader('Content-Type', 'application/json');
 
     let Client = require('azure-iothub').Client;
@@ -41,7 +64,7 @@ app.get('/api/feed/', (req, res) => {
     let methodParams = {
       methodName: 'feed',
       payload: 'petfeeder',
-      // responseTimeoutInSeconds: 15 // set response timeout as 15 seconds
+      responseTimeoutInSeconds: 15 // set response timeout as 15 seconds
     };
 
     let client = Client.fromConnectionString(process.env.IOTHUB_CONNECTION_STRING);
@@ -52,7 +75,6 @@ app.get('/api/feed/', (req, res) => {
         res.send(JSON.stringify({ data: err }));
       } else {
         console.log(methodParams.methodName + ' on ' + targetDevice + ':');
-        // console.log(JSON.stringify(result, null, 2));
         res.send(JSON.stringify({ data: result }));
       }
     });
