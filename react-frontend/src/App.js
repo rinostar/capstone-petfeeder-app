@@ -6,7 +6,8 @@ import {
   Button,
   Container,
   Nav,
-  Jumbotron
+  Jumbotron,
+  Card
 } from 'react-bootstrap';
 import panda from './panda_icon.png';
 
@@ -14,6 +15,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import FlashMessage from "react-flash-message";
 import LogCollection from "./components/LogCollection"
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -22,10 +24,25 @@ class App extends React.Component {
       success: "",
       error: "",
       logs: [],
-      deviceId: "PyPi"
+      deviceId: "PyPi",
+      nextFeed: "",
     };
 
     this.feed = this.feed.bind(this);
+    
+    this.createLog = this.createLog.bind(this);
+    
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChange(event) {
+    this.setState({nextFeed: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('Your next feed is scheduled at: ' + this.state.nextFeed);
+    event.preventDefault();
   }
 
   createLog(timeStamp) {
@@ -42,10 +59,6 @@ class App extends React.Component {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: prms
-        // encodeURIComponent(JSON.stringify({
-        //   "device": this.state.deviceId,
-        //   "fedTime": timeStamp
-        // }))
       }
     );
     console.log(Response);
@@ -98,24 +111,24 @@ class App extends React.Component {
               
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  <Nav.Link type="button" >
+                  <Nav type="button" >
                     <Link to="/" className="text-light">Home</Link>
-                  </Nav.Link>
+                  </Nav>
 
-                  <Nav.Link type="button" >
+                  <Nav type="button" >
                     <Link to="/feed" className="text-light">Feed</Link>
-                  </Nav.Link>
+                  </Nav>
 
-                  <Nav.Link type="button" >
+                  <Nav type="button" >
                     <Link to="/history" className="text-light">History</Link>
-                  </Nav.Link>
+                  </Nav>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
           </>
 
           <div className="error">
-            <FlashMessage duration={8000} message={this.state.error}>
+            <FlashMessage duration={8000}>
               <strong>{this.state.error}</strong>
             </FlashMessage>
           </div>
@@ -152,10 +165,22 @@ class App extends React.Component {
                   onClick={this.feed}
                 >Feed Now</Button>
                 <br/>
-                <session className="text-light">
-                  <p> {this.state.success} </p>
-                  <p> {this.state.error} </p>
-                </session>
+   
+                <br/>
+                <Card className="text-center" bg="light">
+                  <Card.Header>Feed Later...</Card.Header>
+                  <Card.Body>
+                    <Card.Subtitle>Schedule your next feed</Card.Subtitle>
+                    <br/>
+                    <form onSubmit={this.handleSubmit}>
+                      <input type="datetime-local" onChange={this.handleChange}/>
+                      <br/>
+                      <br/>
+                      <input type='submit' value='Schedule'/>
+                    </form>
+                  </Card.Body>    
+                </Card>
+              
               </Container>
             </Route>
 
