@@ -31,6 +31,7 @@ class App extends React.Component {
     this.feed = this.feed.bind(this);
     
     this.createLog = this.createLog.bind(this);
+    this.createAppointment = this.createAppointment.bind(this);
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -41,8 +42,28 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
+    this.createAppointment(this.state.nextFeed)
     alert('Your next feed is scheduled at: ' + this.state.nextFeed);
     event.preventDefault();
+  }
+
+  createAppointment(timeStamp) {
+    let prms = new URLSearchParams({
+      device: this.state.deviceId,
+      feedTime: timeStamp
+    }).toString();
+
+    fetch(
+      "/api/appointments/add",
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: prms
+      }
+    );
+    console.log(Response);
   }
 
   createLog(timeStamp) {
@@ -50,6 +71,10 @@ class App extends React.Component {
       device: this.state.deviceId,
       fedTime: timeStamp
     }).toString();
+
+    if(timeStamp == this.state.nextFeed) {
+      this.setState({nextFeed: ""})
+    };
 
     fetch(
       "/api/logs/add",
@@ -128,13 +153,13 @@ class App extends React.Component {
           </>
 
           <div className="error">
-            <FlashMessage duration={8000}>
+            <FlashMessage duration={5000}>
               <strong>{this.state.error}</strong>
             </FlashMessage>
           </div>
 
           <div className="success">
-            <FlashMessage duration={8000}>
+            <FlashMessage duration={5000}>
               <strong>{this.state.success}</strong>
             </FlashMessage>
           </div>
@@ -172,12 +197,17 @@ class App extends React.Component {
                   <Card.Body>
                     <Card.Subtitle>Schedule your next feed</Card.Subtitle>
                     <br/>
+                    <br/>
                     <form onSubmit={this.handleSubmit}>
                       <input type="datetime-local" onChange={this.handleChange}/>
                       <br/>
                       <br/>
                       <input type='submit' value='Schedule'/>
+                      <br/>
+                      <br/>
+                      <p>{this.state.nextFeed}</p>
                     </form>
+
                   </Card.Body>    
                 </Card>
               

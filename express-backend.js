@@ -1,22 +1,17 @@
 require('dotenv').config();
 require('./db-conn.js');
-
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const connectionString = process.env.IOTHUB_CONNECTION_STRING;
 const targetDevice = process.env.TARGET_DEVICE;
+const schedule = require('node-schedule');
+const Log = require('./models/log_model');
+const Appointment = require('./models/appointment_model');
 
 // Create the server
 const app = express();
 // Serve our api route
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// Mount routes to get and post in DB
-// app.use('/api/logs/', require('./routes/logs-route'));
-// ****** testing
-const Log = require('./models/log_model');
-
 const path = require('path');
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, 'react-frontend/build')));
@@ -25,7 +20,34 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/react-frontend/build/index.html'))
 });
 
-// ********** testing: GET & POST for logs
+// Endpoints for future feeding
+app.get('/api/appointments', (req, res, next) => {
+  Log.find({}, (err, logs) => {
+    if (err) next(err);
+    else res.json(logs);
+  });
+});
+
+app.post('/api/appointments/add', (req, res, next) => {
+  console.log(req.body);
+  const newAppointment = new Appointment({
+    device: req.body.device,
+    feedTime: req.body.feedTime,
+  });
+
+  let tA = req.body.feedTime.split(/[-T:]+/);
+  tA[1] = tA[1] - 1;
+  tA.push(0);
+  let timeData = new Date(tA[0], tA[1], tA[2], tA[3], tA[4], tA[5]);
+  schedule.scheduleJob(timeData, feedN);
+
+  newAppointment.save(err => {
+    if (err) next(err);
+    else res.json({ newAppointment, msg: 'Appointment successfully saved!' });
+  });
+});
+
+// Endpoinyts for past feeding
 app.get('/api/logs', (req, res, next) => {
   Log.find({}, (err, logs) => {
     if (err) next(err);
@@ -45,39 +67,47 @@ app.post('/api/logs/add', (req, res, next) => {
   });
 });
 
-// endpoints for feed request to device through IoT hub
-app.get('/api/feed/', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
+function feedN(){
+  let Client = require('azure-iothub').Client;
+  
+  if (!connectionString) {
+    console.log('Please set the IOTHUB_CONNECTION_STRING environment variable.');
+    process.exit(-1);
+  }
 
-    let Client = require('azure-iothub').Client;
-    
-    if (!connectionString) {
-      console.log('Please set the IOTHUB_CONNECTION_STRING environment variable.');
-      process.exit(-1);
+  if (!targetDevice) {
+    console.log('Please set the TARGET_DEVICE environment variable.');
+    process.exit(-1);
+  }
+
+  let methodParams = {
+    methodName: 'feed',
+    payload: 'petfeeder',
+    responseTimeoutInSeconds: 15 // set response timeout as 15 seconds
+  };
+
+  let client = Client.fromConnectionString(process.env.IOTHUB_CONNECTION_STRING);
+
+  client.invokeDeviceMethod(process.env.TARGET_DEVICE, methodParams, function (err, result) {
+    if (err) {
+      console.error('Failed to invoke method \'' + methodParams.methodName + '\': ' + err.message);
+      return [false, JSON.stringify({ data: err })];
+    } else {
+      console.log(methodParams.methodName + ' on ' + targetDevice + ':');
+      return [true, JSON.stringify({ data: result })];
     }
+  });
+}
 
-    if (!targetDevice) {
-      console.log('Please set the TARGET_DEVICE environment variable.');
-      process.exit(-1);
-    }
-
-    let methodParams = {
-      methodName: 'feed',
-      payload: 'petfeeder',
-      responseTimeoutInSeconds: 15 // set response timeout as 15 seconds
-    };
-
-    let client = Client.fromConnectionString(process.env.IOTHUB_CONNECTION_STRING);
-
-    client.invokeDeviceMethod(process.env.TARGET_DEVICE, methodParams, function (err, result) {
-      if (err) {
-        console.error('Failed to invoke method \'' + methodParams.methodName + '\': ' + err.message);
-        res.send(JSON.stringify({ data: err }));
-      } else {
-        console.log(methodParams.methodName + ' on ' + targetDevice + ':');
-        res.send(JSON.stringify({ data: result }));
-      }
-    });
+// Endpoint for feed request to device through IoT hub
+app.get('/api/feed/',(req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  let result = feedN();
+  if (result[0] == false) {
+    res.send(result[1])
+  }else {
+    res.send(result[1]);
+  }
 });
 
 // Choose the port and start the server
