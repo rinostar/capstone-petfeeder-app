@@ -45,3 +45,17 @@
   align-items: center;
   justify-content: center;
 }
+
+.success{
+  color: white;
+  background-color: green;
+  font-size: 1rem;
+  text-align: center
+}
+
+.error{
+  color: white;
+  background-color: red;
+  font-size: 1rem;
+  text-align: center
+}
