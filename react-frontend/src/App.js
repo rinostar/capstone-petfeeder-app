@@ -63,7 +63,7 @@ class App extends React.Component {
         body: prms
       }
     );
-    console.log(Response);
+    console.log("*** Appointment: " + Response);
   }
 
   createLog(timeStamp) {
@@ -158,14 +158,20 @@ class App extends React.Component {
           </>
 
           <div className="error">
-            <FlashMessage duration={5000}>
+            <FlashMessage duration={6000}>
               <strong>{this.state.error}</strong>
             </FlashMessage>
           </div>
 
           <div className="success">
-            <FlashMessage duration={5000}>
+            <FlashMessage duration={6000}>
               <strong>{this.state.success}</strong>
+            </FlashMessage>
+          </div>
+
+          <div className="success">
+            <FlashMessage duration={6000}>
+              <strong>{this.state.nextFeed}</strong>
             </FlashMessage>
           </div>
 
@@ -198,19 +204,17 @@ class App extends React.Component {
    
                 <br/>
                 <Card className="text-center" bg="light">
-                  <Card.Header>Feed Later...</Card.Header>
+                  <Card.Header><strong>Feed Later</strong></Card.Header>
                   <Card.Body>
-                    <Card.Subtitle>Schedule your next feed</Card.Subtitle>
-                    <br/>
+                    <Card.Subtitle>You can schedule your next feed here</Card.Subtitle>
                     <br/>
                     <form onSubmit={this.handleSubmit}>
                       <input type="datetime-local" onChange={this.handleChange}/>
                       <br/>
                       <br/>
-                      <input type='submit' value='Schedule'/>
+                      <input type='submit' value='Submit'/>
                       <br/>
                       <br/>
-                      <p>{this.state.nextFeed}</p>
                     </form>
 
                   </Card.Body>    

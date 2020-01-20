@@ -40,7 +40,21 @@ app.post('/api/appointments/add', (req, res, next) => {
   tA[1] = tA[1] - 1;
   tA.push(0);
   let timeData = new Date(tA[0], tA[1], tA[2], tA[3], tA[4], tA[5]);
-  schedule.scheduleJob(timeData, feedN);
+  // schedule.scheduleJob(timeData, feedN);
+  schedule.scheduleJob(timeData, () => {
+    feedN((response) => {
+    let s = JSON.stringify(response.result.payload.data)
+
+    const newLog = new Log({
+      device: "PyPi",
+      fedTime: s,
+    });
+    newLog.save(err => {
+      if (err) return err;
+      else return 'Log successfully saved!';
+    });
+    })
+  });
 
   newAppointment.save(err => {
     if (err) next(err);
