@@ -3,7 +3,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Navbar,
-  Button,
   Container,
   Nav,
   Jumbotron,
@@ -23,9 +22,9 @@ class App extends React.Component {
     this.state = {
       success: "",
       error: "",
-      logs: [],
-      deviceId: "PyPi",
       nextFeed: "",
+      logs: [],
+      deviceId: "PyPi"
     };
 
     this.feed = this.feed.bind(this);
@@ -141,40 +140,29 @@ class App extends React.Component {
               
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  <Nav type="button" >
-                    <Link to="/" className="text-light">Home</Link>
-                  </Nav>
-
-                  <Nav type="button" >
-                    <Link to="/feed" className="text-light">Feed</Link>
-                  </Nav>
-
-                  <Nav type="button" >
+                  <Nav.Link href="/" className="text-light">Home</Nav.Link>
+                  <Nav.Link href="/feed" className="text-light">Feed</Nav.Link>
+                  <Nav.Link href="/history" className="text-light">History</Nav.Link>
+                  {/* <Nav type="button" >
                     <Link to="/history" className="text-light">History</Link>
-                  </Nav>
+                  </Nav> */}
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
           </>
-
+          
           <div className="error">
-            <FlashMessage duration={6000}>
+            <FlashMessage duration={5000}>
               <strong>{this.state.error}</strong>
             </FlashMessage>
           </div>
 
           <div className="success">
-            <FlashMessage duration={6000}>
+            <FlashMessage duration={5000}>
               <strong>{this.state.success}</strong>
             </FlashMessage>
           </div>
-
-          <div className="success">
-            <FlashMessage duration={6000}>
-              <strong>{this.state.nextFeed}</strong>
-            </FlashMessage>
-          </div>
-
+        
           <Switch>
             <Route exact path="/">
               <div>
@@ -196,10 +184,10 @@ class App extends React.Component {
 
             <Route path="/Feed">
               <Container className="container-full">
-                <Button 
+                <button 
                   variant="primary"
                   onClick={this.feed}
-                >Feed Now</Button>
+                >Feed Now</button>
                 <br/>
    
                 <br/>
