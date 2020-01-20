@@ -7,7 +7,7 @@ const targetDevice = process.env.TARGET_DEVICE;
 const schedule = require('node-schedule');
 const Log = require('./models/log_model');
 const Appointment = require('./models/appointment_model');
-let Client = require('azure-iothub').Client;
+const Client = require('azure-iothub').Client;
 
 // Create the server
 const app = express();
@@ -68,9 +68,8 @@ app.post('/api/logs/add', (req, res, next) => {
   });
 });
 
-async function feedN(){
-  console.log("HERE WE ARE")
-  
+// Method & Endpoint for feed
+function feedN(callBack){
   if (!connectionString) {
     console.log('Please set the IOTHUB_CONNECTION_STRING environment variable.');
     process.exit(-1);
@@ -88,67 +87,25 @@ async function feedN(){
   };
 
   let client = Client.fromConnectionString(process.env.IOTHUB_CONNECTION_STRING);
-  var result;
-  await client.invokeDeviceMethod(process.env.TARGET_DEVICE, methodParams, function (err, result) {
-    console.log("IN FUNC");
+  client.invokeDeviceMethod(process.env.TARGET_DEVICE, methodParams).then((result, err) => {
     if (err) {
       console.error('Failed to invoke method \'' + methodParams.methodName + '\': ' + err.message);
-      let methodRes = JSON.stringify({ data: err });
-      result = methodRes;
-      return methodRes;
     } else {
       console.log(methodParams.methodName + ' on ' + targetDevice + ':');
-      let methodRes = JSON.stringify({ data: result });
-      result = methodRes;
-      return methodRes;
+      callBack(result);
     }
   });
-  return result;
 }
-function lovely(){
-  console.log("THIS IS LOVELY");
 
-  if (!connectionString) {
-    console.log('Please set the IOTHUB_CONNECTION_STRING environment variable.');
-    process.exit(-1);
-  }
-
-  if (!targetDevice) {
-    console.log('Please set the TARGET_DEVICE environment variable.');
-    process.exit(-1);
-  }
-
-  let methodParams = {
-    methodName: 'feed',
-    payload: 'petfeeder',
-    responseTimeoutInSeconds: 15 // set response timeout as 15 seconds
-  };
-  let client = Client.fromConnectionString(process.env.IOTHUB_CONNECTION_STRING);
-
-  
-
-  return "lovely"
-}
-// Endpoint for feed request to device through IoT hub
-app.get('/api/feed/', async (req, res)=> {
-  try{
-    //const result = await feedN();
-    //await console.log(result);
-    const love = await lovely();
-    console.log(love);
-    
-    //console.log(result);
-    console.log('Finished Feeding')
-    //res.setHeader('Content-Type', 'application/json');
-    //res.send(result);
-  }catch(error){
-    console.log(error);
-  }
-
+app.get('/api/feed/', (req, res) => {
+  feedN((response) => {
+    let s = JSON.stringify(response.result.payload)
+    res.json(s);
+  });
 });
 
 // Choose the port and start the server
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`React-Express running on port ${PORT}...`);
-});
+})
