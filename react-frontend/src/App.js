@@ -92,12 +92,17 @@ class App extends React.Component {
   feed() {
     fetch("/api/feed/")
     .then(response => response.json())
-    .then(JsonData => {
-      this.setState({success: JsonData.data.payload.data})
-      this.createLog(JsonData.data.payload.data)
+    .then(stringRes => {
+      let JsonData = JSON.parse(stringRes);
+      this.setState({
+        success: JsonData.data
+      });
+      this.createLog(JsonData.data);
     })
-    .catch(JsonData => {
-      this.setState({error: JsonData.data.payload.data})
+    .catch(error => {
+      this.setState({
+        error: "Failed to feed"
+      });
     });
   }
 
