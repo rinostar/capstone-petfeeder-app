@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import panda from './panda_icon.png';
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import FlashMessage from "./components/FlashMessage";
 import LogCollection from "./components/LogCollection"
@@ -151,9 +151,15 @@ class App extends React.Component {
               
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  <Nav.Link href="/" className="text-light">Home</Nav.Link>
-                  <Nav.Link href="/feed" className="text-light">Feed</Nav.Link>
-                  <Nav.Link href="/history" className="text-light">History</Nav.Link>
+                  <Nav.Link>
+                    <Link to="/" className="text-light">Home</Link>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <Link to="/feed" className="text-light">Feed</Link>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <Link to="/history" className="text-light">History</Link>
+                  </Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
@@ -211,7 +217,7 @@ class App extends React.Component {
               </div>
             </Route>
 
-            <Route path="/Feed">
+            <Route path="/feed">
               <Container className="container-full">
                 <button 
                   variant="primary"
@@ -240,7 +246,7 @@ class App extends React.Component {
               </Container>
             </Route>
 
-            <Route path="/History">
+            <Route path="/history">
               <div>
                 <LogCollection logs={this.state.logs} />
               </div>
