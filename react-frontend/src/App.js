@@ -28,7 +28,7 @@ class App extends React.Component {
       error: "",
       nextFeed: "",
       logs: [],
-      appointments: [],
+      // appointments: [],
       deviceId: "PyPi"
     };
 
@@ -117,11 +117,13 @@ class App extends React.Component {
     axios
       .get("/api/logs")
       .then(response => {
-        let data = response.slice(Math.max(response.length - 7, 1));
+        console.log(response)
+        let data = response.data.slice(Math.max(response.data.length - 10, 1));
+        console.log(data)
         this.setState({
           logs: data
         });
-        console.log(this.state.logs)
+        console.log("***log:" + this.state.logs)
       })
       .catch(error => {
         this.setState({
@@ -129,20 +131,22 @@ class App extends React.Component {
         });
       });
 
-    axios
-      .get("/api/appointments")
-      .then(response => {
-        let data = response.slice(Math.max(response.length - 7, 1));
-        this.setState({
-          appointments: data
-        });
-        console.log(this.state.appointments)
-      })
-      .catch(error => {
-        this.setState({
-          error: "There was an error in retrieving feeding appointments."
-        });
-      });
+    // axios
+    //   .get("/api/appointments")
+    //   .then(response => {
+    //     console.log(response)
+    //     let data = response.data.slice(Math.max(response.data.length - 7, 1));
+    //     console.log(data)
+    //     this.setState({
+    //       appointments: data
+    //     });
+    //     console.log("***app:" + this.state.appointments)
+    //   })
+    //   .catch(error => {
+    //     this.setState({
+    //       error: "There was an error in retrieving feeding appointments."
+    //     });
+    //   });
   }
 
   onTimeout = () => {
@@ -263,15 +267,14 @@ class App extends React.Component {
             <Route path="/history">
               
               <div className="text-light">
-                <h5>Real-time Feeding Logs</h5>
+                <h5>Most Recent Feeding Logs</h5>
                 <LogCollection logs={this.state.logs} />
               </div>
-
-              
-              <div className="text-light">
+            
+              {/* <div className="text-light">
                 <h5>Scheduled Feeding Logs</h5>
                 <AppointmentCollection appointments={this.state.appointments} />
-              </div>
+              </div> */}
             </Route>
           </Switch>
         </Router>
