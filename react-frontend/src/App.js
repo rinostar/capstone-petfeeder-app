@@ -10,9 +10,9 @@ import {
 } from 'react-bootstrap';
 import panda from './panda_icon.png';
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from 'axios';
-import FlashMessage from "react-flash-message";
+import FlashMessage from "./components/FlashMessage";
 import LogCollection from "./components/LogCollection"
 
 class App extends React.Component {
@@ -38,6 +38,7 @@ class App extends React.Component {
 
   handleChange(event) {
     this.setState({nextFeed: event.target.value});
+    this.componentDidMount();
   }
 
   handleSubmit(event) {
@@ -71,8 +72,9 @@ class App extends React.Component {
       fedTime: timeStamp
     }).toString();
 
-    if(timeStamp == this.state.nextFeed) {
+    if(timeStamp === this.state.nextFeed) {
       this.setState({nextFeed: ""})
+      this.componentDidMount();
     };
 
     fetch(
@@ -96,6 +98,7 @@ class App extends React.Component {
       this.setState({
         success: JsonData.data
       });
+      this.componentDidMount();
       this.createLog(JsonData.data);
     })
     .catch(error => {
@@ -118,6 +121,14 @@ class App extends React.Component {
           error: "There was an error in retrieving feeding logs."
         });
       });
+  }
+
+  onTimeout = () => {
+    this.setState({
+      success: undefined,
+      error: undefined,
+      nextFeed: undefined,
+    })
   }
 
   render() {
@@ -143,26 +154,44 @@ class App extends React.Component {
                   <Nav.Link href="/" className="text-light">Home</Nav.Link>
                   <Nav.Link href="/feed" className="text-light">Feed</Nav.Link>
                   <Nav.Link href="/history" className="text-light">History</Nav.Link>
-                  {/* <Nav type="button" >
-                    <Link to="/history" className="text-light">History</Link>
-                  </Nav> */}
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
           </>
-          
-          <div className="error">
-            <FlashMessage duration={5000}>
-              <strong>{this.state.error}</strong>
-            </FlashMessage>
-          </div>
 
-          <div className="success">
-            <FlashMessage duration={5000}>
-              <strong>{this.state.success}</strong>
-            </FlashMessage>
-          </div>
-        
+          { this.state.error
+            ? <strong>
+                <FlashMessage
+                  message={this.state.error}
+                  style="error"
+                  onTimeoutCallback={this.onTimeout}
+                />
+              </strong>
+            : ""
+          }
+
+          { this.state.success
+            ? <strong>
+                <FlashMessage
+                  message={this.state.success}
+                  style="success"
+                  onTimeoutCallback={this.onTimeout}
+                />
+              </strong>
+            : ""
+          }
+
+          { this.state.nextFeed
+            ? <strong>
+                <FlashMessage
+                  message={this.state.nextFeed}
+                  style="success"
+                  onTimeoutCallback={this.onTimeout}
+                />
+              </strong>
+            : ""
+          } 
+
           <Switch>
             <Route exact path="/">
               <div>
