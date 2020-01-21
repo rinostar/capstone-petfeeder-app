@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  /* background-color: #282c34; */
 }
 
 .App-logo {
@@ -54,7 +54,7 @@ body, .background{
 }
 
 .card-deck {
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .success{
@@ -69,4 +69,9 @@ body, .background{
   background-color: red;
   font-size: 1rem;
   text-align: center
+}
+
+.h2, .h6 {
+  color: black ;
+  font-weight: bolder;
 }

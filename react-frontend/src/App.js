@@ -42,7 +42,7 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({nextFeed: event.target.value});
+    this.setState({nextFeed: "Scheduling your next feed at: " + event.target.value});
     this.componentDidMount();
   }
 
@@ -101,7 +101,7 @@ class App extends React.Component {
     .then(stringRes => {
       let JsonData = JSON.parse(stringRes);
       this.setState({
-        success: JsonData.data
+        success: "Most recent feed: " + JsonData.data
       });
       this.componentDidMount();
       this.createLog(JsonData.data);
@@ -228,10 +228,10 @@ class App extends React.Component {
             <Route exact path="/">
               <div className="moto">
                 <Jumbotron fluid>
-                  <h2>Welcome to FoodieBear PetFeeder</h2>
-                  <h6>
+                  <h5>Welcome to FoodieBear PetFeeder</h5>
+                  <h2>
                     Stay connected. Whenever, Wherever
-                  </h6>
+                  </h2>
                 </Jumbotron>
               </div>
             </Route>
