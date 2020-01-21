@@ -48,7 +48,7 @@ class App extends React.Component {
 
   handleSubmit(event) {
     this.createAppointment(this.state.nextFeed)
-    alert('Your next feed is scheduled at: ' + this.state.nextFeed);
+    alert(this.state.nextFeed);
     event.preventDefault();
   }
 
@@ -68,7 +68,6 @@ class App extends React.Component {
         body: prms
       }
     );
-    console.log("*** Appointment: " + Response);
   }
 
   createLog(timeStamp) {
@@ -101,7 +100,7 @@ class App extends React.Component {
     .then(stringRes => {
       let JsonData = JSON.parse(stringRes);
       this.setState({
-        success: JsonData.data
+        success: "Most recent feed: " + JsonData.data
       });
       this.componentDidMount();
       this.createLog(JsonData.data);
@@ -228,10 +227,10 @@ class App extends React.Component {
             <Route exact path="/">
               <div className="moto">
                 <Jumbotron fluid>
-                  <h2>Welcome to FoodieBear PetFeeder</h2>
-                  <h6>
+                  <h5>Welcome to FoodieBear PetFeeder</h5>
+                  <h2>
                     Stay connected. Whenever, Wherever
-                  </h6>
+                  </h2>
                 </Jumbotron>
               </div>
             </Route>
@@ -267,7 +266,7 @@ class App extends React.Component {
             <Route path="/history">
               
               <div className="text-light">
-                <h5>Most Recent Feeding Logs</h5>
+                <h5 className="text-dark">Most Recent Feeding Logs</h5>
                 <LogCollection logs={this.state.logs} />
               </div>
             
