@@ -30,7 +30,8 @@ app.get('/api/appointments', (req, res, next) => {
 });
 
 app.post('/api/appointments/add', (req, res, next) => {
-  console.log(req.body);
+  console.log("1..." + req.body.device);
+  console.log("1..." + req.body.feedTime);
   const newAppointment = new Appointment({
     device: req.body.device,
     feedTime: req.body.feedTime,
@@ -39,10 +40,13 @@ app.post('/api/appointments/add', (req, res, next) => {
   let tA = req.body.feedTime.split(/[-T:]+/);
   tA[1] = tA[1] - 1;
   tA.push(0);
+  console.log("2..." + tA)
   let timeData = new Date(tA[0], tA[1], tA[2], tA[3], tA[4], tA[5]);
+  console.log("3..." + tA[0], tA[1], tA[2], tA[3], tA[4], tA[5])
   schedule.scheduleJob(timeData, function() {
     feedN((response) => {
     let s = JSON.stringify(response.result.payload.data)
+    console.log("4..." + s)
     const newLog = new Log({
       device: "PyPi",
       fedTime: s,

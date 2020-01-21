@@ -42,7 +42,7 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({nextFeed: "Scheduling your next feed at: " + event.target.value});
+    this.setState({nextFeed: event.target.value});
     this.componentDidMount();
   }
 
@@ -68,7 +68,6 @@ class App extends React.Component {
         body: prms
       }
     );
-    console.log("*** Appointment: " + Response);
   }
 
   createLog(timeStamp) {
