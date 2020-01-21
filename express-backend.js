@@ -23,9 +23,9 @@ app.get('/', (req, res) => {
 
 // Endpoints for future feeding
 app.get('/api/appointments', (req, res, next) => {
-  Log.find({}, (err, logs) => {
+  Log.find({}, (err, appointments) => {
     if (err) next(err);
-    else res.json(logs);
+    else res.json(appointments);
   });
 });
 

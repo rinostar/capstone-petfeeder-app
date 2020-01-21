@@ -117,9 +117,11 @@ class App extends React.Component {
     axios
       .get("/api/logs")
       .then(response => {
+        let data = response.slice(Math.max(response.length - 7, 1));
         this.setState({
-          logs: response.data
+          logs: data
         });
+        console.log(this.state.logs)
       })
       .catch(error => {
         this.setState({
@@ -130,9 +132,11 @@ class App extends React.Component {
     axios
       .get("/api/appointments")
       .then(response => {
+        let data = response.slice(Math.max(response.length - 7, 1));
         this.setState({
-          appointments: response.data
+          appointments: data
         });
+        console.log(this.state.appointments)
       })
       .catch(error => {
         this.setState({
