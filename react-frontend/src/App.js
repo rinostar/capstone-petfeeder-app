@@ -3,18 +3,21 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Navbar,
-  Button,
-  Container,
   Nav,
   Jumbotron,
-  Card
+  Card,
+  CardDeck,
 } from 'react-bootstrap';
 import panda from './panda_icon.png';
+import cat from './cat.jpg';
+import dog from './dog.jpg';
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from 'axios';
-import FlashMessage from "react-flash-message";
+import FlashMessage from "./components/FlashMessage";
 import LogCollection from "./components/LogCollection"
+import AppointmentCollection from "./components/AppointmentCollection"
+
 
 class App extends React.Component {
   constructor(props) {
@@ -23,9 +26,10 @@ class App extends React.Component {
     this.state = {
       success: "",
       error: "",
-      logs: [],
-      deviceId: "PyPi",
       nextFeed: "",
+      logs: [],
+      appointments: [],
+      deviceId: "PyPi"
     };
 
     this.feed = this.feed.bind(this);
@@ -39,6 +43,7 @@ class App extends React.Component {
 
   handleChange(event) {
     this.setState({nextFeed: event.target.value});
+    this.componentDidMount();
   }
 
   handleSubmit(event) {
@@ -72,8 +77,9 @@ class App extends React.Component {
       fedTime: timeStamp
     }).toString();
 
-    if(timeStamp == this.state.nextFeed) {
+    if(timeStamp === this.state.nextFeed) {
       this.setState({nextFeed: ""})
+      this.componentDidMount();
     };
 
     fetch(
@@ -97,6 +103,7 @@ class App extends React.Component {
       this.setState({
         success: JsonData.data
       });
+      this.componentDidMount();
       this.createLog(JsonData.data);
     })
     .catch(error => {
@@ -110,15 +117,40 @@ class App extends React.Component {
     axios
       .get("/api/logs")
       .then(response => {
+        let data = response.slice(Math.max(response.length - 7, 1));
         this.setState({
-          logs: response.data
+          logs: data
         });
+        console.log(this.state.logs)
       })
       .catch(error => {
         this.setState({
           error: "There was an error in retrieving feeding logs."
         });
       });
+
+    axios
+      .get("/api/appointments")
+      .then(response => {
+        let data = response.slice(Math.max(response.length - 7, 1));
+        this.setState({
+          appointments: data
+        });
+        console.log(this.state.appointments)
+      })
+      .catch(error => {
+        this.setState({
+          error: "There was an error in retrieving feeding appointments."
+        });
+      });
+  }
+
+  onTimeout = () => {
+    this.setState({
+      success: undefined,
+      error: undefined,
+      nextFeed: undefined,
+    })
   }
 
   render() {
@@ -141,99 +173,108 @@ class App extends React.Component {
               
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  <Nav type="button" >
+                  <Nav.Link>
                     <Link to="/" className="text-light">Home</Link>
-                  </Nav>
-
-                  <Nav type="button" >
+                  </Nav.Link>
+                  <Nav.Link>
                     <Link to="/feed" className="text-light">Feed</Link>
-                  </Nav>
-
-                  <Nav type="button" >
+                  </Nav.Link>
+                  <Nav.Link>
                     <Link to="/history" className="text-light">History</Link>
-                  </Nav>
+                  </Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
           </>
 
-          <div className="error">
-            <FlashMessage duration={6000}>
-              <strong>{this.state.error}</strong>
-            </FlashMessage>
-          </div>
+          { this.state.error
+            ? <strong>
+                <FlashMessage
+                  message={this.state.error}
+                  style="error"
+                  onTimeoutCallback={this.onTimeout}
+                />
+              </strong>
+            : ""
+          }
 
-          <div className="success">
-            <FlashMessage duration={6000}>
-              <strong>{this.state.success}</strong>
-            </FlashMessage>
-          </div>
+          { this.state.success
+            ? <strong>
+                <FlashMessage
+                  message={this.state.success}
+                  style="success"
+                  onTimeoutCallback={this.onTimeout}
+                />
+              </strong>
+            : ""
+          }
 
-          <div className="success">
-            <FlashMessage duration={6000}>
-              <strong>{this.state.nextFeed}</strong>
-            </FlashMessage>
-          </div>
+          { this.state.nextFeed
+            ? <strong>
+                <FlashMessage
+                  message={this.state.nextFeed}
+                  style="success"
+                  onTimeoutCallback={this.onTimeout}
+                />
+              </strong>
+            : ""
+          } 
 
           <Switch>
             <Route exact path="/">
-              <div>
+              <div className="moto">
                 <Jumbotron fluid>
-                  <h1>FoodieBear PetFeeder</h1>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </p>
+                  <h2>Welcome to FoodieBear PetFeeder</h2>
+                  <h6>
+                    Stay connected. Whenever, Wherever
+                  </h6>
                 </Jumbotron>
               </div>
             </Route>
 
-            <Route path="/Feed">
-              <Container className="container-full">
-                <Button 
-                  variant="primary"
-                  onClick={this.feed}
-                >Feed Now</Button>
-                <br/>
-   
-                <br/>
-                <Card className="text-center" bg="light">
-                  <Card.Header><strong>Feed Later</strong></Card.Header>
+            <Route path="/feed">
+              <CardDeck className="card-deck">
+                <Card>
+                  <Card.Img variant="top" src={cat} />
                   <Card.Body>
-                    <Card.Subtitle>You can schedule your next feed here</Card.Subtitle>
-                    <br/>
-                    <form onSubmit={this.handleSubmit}>
-                      <input type="datetime-local" onChange={this.handleChange}/>
-                      <br/>
-                      <br/>
-                      <input type='submit' value='Submit'/>
-                      <br/>
-                      <br/>
-                    </form>
-
-                  </Card.Body>    
+                    <Card.Title>Feed Now</Card.Title>
+                    <button 
+                      variant="primary"
+                      onClick={this.feed}
+                    >Submit</button>
+                  </Card.Body>
                 </Card>
-              
-              </Container>
+
+                <Card>
+                  <Card.Img variant="top" src={dog} />
+                  <Card.Body>
+                    <Card.Title>Feed Later</Card.Title>
+                      <form onSubmit={this.handleSubmit}>
+                        <input type="datetime-local" onChange={this.handleChange}/>
+                        <br/>
+                        <br/>
+                        <input type='submit' value='Submit'/>
+                      </form>
+                  </Card.Body>
+                </Card>
+              </CardDeck>
             </Route>
 
-            <Route path="/History">
-              <div>
+            <Route path="/history">
+              
+              <div className="text-light">
+                <h5>Real-time Feeding Logs</h5>
                 <LogCollection logs={this.state.logs} />
+              </div>
+
+              
+              <div className="text-light">
+                <h5>Scheduled Feeding Logs</h5>
+                <AppointmentCollection appointments={this.state.appointments} />
               </div>
             </Route>
           </Switch>
         </Router>
-      
-        <footer>
-          <p className="text-light">@FoodieBear</p>
-        </footer>
       </div>
     );
   } 
