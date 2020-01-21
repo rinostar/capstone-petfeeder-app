@@ -48,7 +48,7 @@ class App extends React.Component {
 
   handleSubmit(event) {
     this.createAppointment(this.state.nextFeed)
-    alert('Your next feed is scheduled at: ' + this.state.nextFeed);
+    alert(this.state.nextFeed);
     event.preventDefault();
   }
 
@@ -267,7 +267,7 @@ class App extends React.Component {
             <Route path="/history">
               
               <div className="text-light">
-                <h5>Most Recent Feeding Logs</h5>
+                <h5 className="text-dark">Most Recent Feeding Logs</h5>
                 <LogCollection logs={this.state.logs} />
               </div>
             
