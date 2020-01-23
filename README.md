@@ -1,13 +1,13 @@
 # Foodiebear Petfeeder
 Pets bring compaionship, health, and just pure joy in our lives. That's why it's important to take care of our friends, despite our increasingly busy life-style. Foodiebear Petfeeder provides pet owners the freedom to feed their loved ones whenever, wherever. This project includes a DIY pet feeder powered by raspberry pi, a MERN web app powerd by Azure cloud platform, and a Alexa skill powered by AWS Lambda. Whether your pets need to be fed breakfast before you wake up, dinner while you're working late, or simply a treate when you are busy in the house, you should stay tuned and support this awesome porject :) 
 
-## 0. Prerequisite
+## 1. Prerequisite
 Open an Azure account for setup services for:
 * [App Service] (https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-nodejs)
 * [IoT hub] (https://docs.microsoft.com/en-us/azure/iot-hub/quickstart-send-telemetry-node)
 * [Azure Cosmos DB] (https://docs.microsoft.com/en-us/azure/cosmos-db/create-mongodb-dotnet)
 
-## 1. DIY Pet Feeder
+## 2. DIY Pet Feeder
 Materials:
 * Raspberry Pi 2 Revision B (w/ SD Card, Wifi Adapter)
 * [L298N Motor Driver](https://www.amazon.com/Controller-H-Bridge-Stepper-Mega2560-Duemilanove/dp/B01BWLICV4/ref=sr_1_2_sspa?keywords=kuman+l298n+driver&qid=1579745184&sr=8-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUE0Qk9EOTZKMVpTTkImZW5jcnlwdGVkSWQ9QTAzOTUyNzQyQlFGNTlMTkk5NzdFJmVuY3J5cHRlZEFkSWQ9QTA2MjkzNzI5TkpKSUpHNTVBUTEmd2lkZ2V0TmFtZT1zcF9hdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl)
@@ -31,7 +31,7 @@ Python code:
 * create .env file and update your Azure IoT Hub info accordingly
 * cd to the file on Pi and run command `$ python3 <filename>`
 
-## 2. MERN Web App
+## 3. MERN Web App
 Run Locally:
 1. git clone the above repo
 2. npm install all depedencies (both for react & express)
@@ -50,13 +50,16 @@ Repo on Github: https://github.com/rinostar/capstone-petfeeder-app
 Live on Azurewebsites: https://foodiebear.azurewebsites.net/
 Reference: https://medium.com/@chrisjr06/creating-mern-stack-app-and-hosting-in-microsoft-azure-using-create-react-app-w-continuous-4acef0c87e71
 
-## 3. Alexa Skill
+## 4. Alexa Skill
 Please follow instruction on [Alexa Developer Console] (https://developer.amazon.com/alexa/console/ask)
 
 Python code for Lambda fucntion:
 <br />https://github.com/rinostar/capstone-petfeeder-alexa
 
 Note: Be sure to use the same email address for your developer console and your alexa. After deployment, the new Alexa skill will be available on your Alexa device automatically. Thanks, Alexa.
+
+## 5. Architecture Diagram
+![Foodiebear](https://user-images.githubusercontent.com/52188117/72954152-59892800-3d8f-11ea-93fb-0dc0c7a37563.png)
 
 ### Author
 [Yitgop Y.](https://www.linkedin.com/in/yitgopyyhxox/)
