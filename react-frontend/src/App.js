@@ -43,11 +43,11 @@ class App extends React.Component {
 
   handleChange(event) {
     this.setState({nextFeed: event.target.value});
-    this.componentDidMount();
+    // this.componentDidMount();
   }
 
   handleSubmit(event) {
-    // this.createAppointment(this.state.nextFeed)
+    this.createAppointment(this.state.nextFeed)
     alert(this.state.nextFeed);
     event.preventDefault();
   }
@@ -76,10 +76,10 @@ class App extends React.Component {
       fedTime: timeStamp
     }).toString();
 
-    if(timeStamp === this.state.nextFeed) {
-      this.setState({nextFeed: ""})
-      this.componentDidMount();
-    };
+    // if(timeStamp === this.state.nextFeed) {
+    //   this.setState({nextFeed: ""})
+    //   this.componentDidMount();
+    // };
 
     fetch(
       "/api/logs/add",
@@ -152,7 +152,7 @@ class App extends React.Component {
     this.setState({
       success: undefined,
       error: undefined,
-      nextFeed: undefined,
+      // nextFeed: undefined,
     })
   }
 
@@ -212,7 +212,7 @@ class App extends React.Component {
             : ""
           }
 
-          { this.state.nextFeed
+          {/* { this.state.nextFeed
             ? <strong>
                 <FlashMessage
                   message={this.state.nextFeed}
@@ -221,7 +221,7 @@ class App extends React.Component {
                 />
               </strong>
             : ""
-          } 
+          }  */}
 
           <Switch>
             <Route exact path="/">
