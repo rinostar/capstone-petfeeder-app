@@ -28,7 +28,7 @@ class App extends React.Component {
       error: "",
       nextFeed: "",
       logs: [],
-      // appointments: [],
+      appointments: [],
       deviceId: "PyPi"
     };
 
