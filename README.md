@@ -59,7 +59,7 @@ Python code for Lambda fucntion:
 Note: Be sure to use the same email address for your developer console and your alexa. After deployment, the new Alexa skill will be available on your Alexa device automatically. Thanks, Alexa.
 
 ## 5. Architecture Diagram
-![Foodiebear](https://user-images.githubusercontent.com/52188117/72954152-59892800-3d8f-11ea-93fb-0dc0c7a37563.png)
+![Foodiebear](https://user-images.githubusercontent.com/52188117/72955297-63148f00-3d93-11ea-8377-74b722fa7012.png)
 
 ### Author
 [Yitgop Y.](https://www.linkedin.com/in/yitgopyyhxox/)
