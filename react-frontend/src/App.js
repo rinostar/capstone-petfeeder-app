@@ -47,7 +47,7 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    this.createAppointment(this.state.nextFeed)
+    // this.createAppointment(this.state.nextFeed)
     alert(this.state.nextFeed);
     event.preventDefault();
   }
