@@ -7,7 +7,9 @@ To learn more about this project, please read the initial product plan [here](ht
 ![Foodiebear](https://user-images.githubusercontent.com/52188117/72955297-63148f00-3d93-11ea-8377-74b722fa7012.png)
 
 ## 2. Repo Description
-This is the web app part of the FoodieBear Pet Feeder project. This repo contains the code for the MERN(Mongo-Express-React-Node.js) web app and instructions to deploy to Azure App Services, along with some learning resources for Azure cloud platform and etc.
+This is the web app part of the FoodieBear Pet Feeder project. This repo contains the code for the MERN(Mongo-Express-React-Node.js) web app and instructions to deploy to Azure App Services, along with some learning resources for Azure cloud platform and etc. 
+
+For reference, please see the live example here: https://foodiebear.azurewebsites.net/
 
 ## 3. Getting Started
 
