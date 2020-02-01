@@ -8,7 +8,7 @@ To learn more about this project, please read the initial product plan [here](ht
 <br />![Foodiebear](https://user-images.githubusercontent.com/52188117/72955297-63148f00-3d93-11ea-8377-74b722fa7012.png)
 
 ## 2. Repo Description
-This is the web app part of the FoodieBear Pet Feeder project. This repo contains the code for the MERN(Mongo-Express-React-Node.js) web app and instructions to deploy to Azure App Services, along with some learning resources for Azure cloud platform and etc. 
+This is the web app part of the FoodieBear Pet Feeder project. This repo contains the code for the MERN(Mongo-Express-React-Node.js) web app and instructions to deploy to Azure App Services, along with some learning resources for Azure cloud platform. 
 
 For reference, please see the live example here: https://foodiebear.azurewebsites.net/
 
@@ -29,7 +29,7 @@ Create .env file in root folder and update the the following variables according
 * DB_PASSWORD
 * DB_CONNECTION_STRING
 
-<br />NOTE: TARGET_DEVICE=PyPi should be the default, unless you update the device name entirely throughout the project. 
+<br />NOTE: TARGET_DEVICE=PyPi should be the default unless you update the device name entirely throughout the project. 
 
 ### b). Dependencies
 For the Express backend:
@@ -54,29 +54,29 @@ For the React frontend:
 * react-flash-message
 * serialize-javascript
 
-<br />NOTE: Please use `$ npm install <library-name>` for needed libraries or `$ npm install all` for all libraires in the package.json file.
+<br />NOTE: Please use `$ npm install <library-name>` for needed libraries or `$ npm install all` for all libraries in the package.json file.
 
 ### c). Build & run the app locally
 * cd to "react-fronted" folder and run the command `$ npm run build`
 * cd back to root folder and run the command `$ npm start`
 
 ### d). Deploy to Azure App Services
-* add "Azure Tools" extention to VS Code
+* add "Azure Tools" extension to VS Code
 * deploy from VS code [directly](https://docs.microsoft.com/en-us/azure/javascript/tutorial-vscode-azure-app-service-node-01)
 
 ### e). Learning Resources
 MERN App & Azure App Services:
-* ["Creating MERN Stack App and Hosting In Microsoft Azure using Create-React-App w/ Continuous Integration"](https://medium.com/@chrisjr06/creating-mern-stack-app-and-hosting-in-microsoft-azure-using-create-react-app-w-continuous-4acef0c87e71)
-* ["Deploy to Azure App Service using Visual Studio Code"](https://docs.microsoft.com/en-us/azure/javascript/tutorial-vscode-azure-app-service-node-01)
-* ["How to connect your React app to a backend on the same origin"](https://flaviocopes.com/how-to-serve-react-from-same-origin/)
-* ["Deploying a Client-Side Rendered create-react-app to Microsoft Azure"](https://css-tricks.com/deploying-a-client-side-rendered-create-react-app-to-microsoft-azure/)
+* [*Creating MERN Stack App and Hosting In Microsoft Azure using Create-React-App w/ Continuous Integration*](https://medium.com/@chrisjr06/creating-mern-stack-app-and-hosting-in-microsoft-azure-using-create-react-app-w-continuous-4acef0c87e71)
+* [*Deploy to Azure App Service using Visual Studio Code*](https://docs.microsoft.com/en-us/azure/javascript/tutorial-vscode-azure-app-service-node-01)
+* [*How to connect your React app to a backend on the same origin*](https://flaviocopes.com/how-to-serve-react-from-same-origin/)
+* [*Deploying a Client-Side Rendered create-react-app to Microsoft Azure*](https://css-tricks.com/deploying-a-client-side-rendered-create-react-app-to-microsoft-azure/)
 
 Azure IoT Hub:
-* ["What is Azure IoT Hub?"](https://docs.microsoft.com/en-us/azure/iot-hub/about-iot-hub)
-* ["Quickstart: Send telemetry from a device to an IoT hub and read it with a back-end application (Node.js)"](https://docs.microsoft.com/en-us/azure/iot-hub/quickstart-send-telemetry-node)
+* [*What is Azure IoT Hub?*](https://docs.microsoft.com/en-us/azure/iot-hub/about-iot-hub)
+* [*Quickstart: Send telemetry from a device to an IoT hub and read it with a back-end application (Node.js)*](https://docs.microsoft.com/en-us/azure/iot-hub/quickstart-send-telemetry-node)
 
 Azure Cosmo DB:
-* ["Azure Cosmos DB's API for MongoDB"](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
+* [*Azure Cosmos DB's API for MongoDB*](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
 
 ## 4. Other Repos:
 * Part I. Hardware: https://github.com/rinostar/capstone_petfeeder
@@ -93,4 +93,3 @@ In addition to authors of the links mentioned above, I want to thank:
 * and [Ada](https://adadevelopersacademy.org/) community for the support.
 
 Thank you! Until next time 🌟
-
