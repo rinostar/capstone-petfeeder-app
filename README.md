@@ -1,7 +1,7 @@
 # Foodiebear Pet Feeder (Part II. Web App)
 
 ## 1. Project Overview
-Foodiebear Pet Feeder helps pet owners to stay connected with their loved ones whenever, wherever. This project includes a DIY pet feeder powered by Raspberry Pi, a MERN web app powered by Azure cloud platform, and an Alexa skill powered by AWS Lambda. Whether your pets need to be fed breakfast before you wake up, dinner while you're working late, or simply a treat when you are busy in the house, you should stay tuned to this awesome project :dog::cat::panda_face:
+Foodiebear PetFeeder helps pet owners to stay connected with their loved ones whenever, wherever. This project includes a DIY pet feeder powered by Raspberry Pi, a MERN web app powered by Azure cloud platform, and an Alexa skill powered by AWS Lambda. Whether your pets need to be fed breakfast before you wake up, dinner while you're working late, or simply a treat when you are busy in the house, you should stay tuned to this awesome project :dog::cat::panda_face:
 
 To learn more about this project, please read the initial product plan [here](https://gist.github.com/rinostar/a79a67ce073be1d7e5be2e4a55bb714e) or the final architecture diagram below:
 ![Foodiebear](https://user-images.githubusercontent.com/52188117/72955297-63148f00-3d93-11ea-8377-74b722fa7012.png)
@@ -13,7 +13,7 @@ This is the web app part of the FoodieBear Pet Feeder project. This repo contain
 
 Git clone this repo to the desired folder on your computer and use the latest version of VS Code to edit:
 
-## a). Prerequisites
+### a). Prerequisites
 Open an account with Azure and add the following services to your account:
 * [App Service] (https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-nodejs)
 * [IoT hub] (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal)
