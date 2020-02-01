@@ -15,9 +15,9 @@ Git clone this repo to the desired folder on your computer and use the latest ve
 
 ### a). Prerequisites
 Open an account with Azure and add the following services to your account:
-[App Service](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-nodejs)
-[IoT hub](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal)
-[Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-mongodb-dotnet)
+<br />[App Service](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-nodejs)
+<br />[IoT hub](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal)
+<br />[Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-mongodb-dotnet)
 
 Create .env file in root folder and update the the following variables accordingly:
 * IOTHUB_CONNECTION_STRING
