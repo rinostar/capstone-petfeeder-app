@@ -79,8 +79,8 @@ Azure Cosmo DB:
 * [*Azure Cosmos DB's API for MongoDB*](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
 
 ## 4. Other Repos:
-* Part I. Hardware: https://github.com/rinostar/capstone_petfeeder
-* Part III. Alexa Feature: https://github.com/rinostar/capstone-petfeeder-alexa
+* Part I. Hardware & Raspberry Pi: https://github.com/rinostar/capstone_petfeeder
+* Part III. Alexa Skill & Lambda Function: https://github.com/rinostar/capstone-petfeeder-alexa
 
 ## 5. Author & Contact
 Github: [@rinostar](https://github.com/rinostar)
