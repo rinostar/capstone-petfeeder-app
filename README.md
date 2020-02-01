@@ -25,11 +25,10 @@ Create .env file in root folder and update the the following variables according
 * DB_USERNAME
 * DB_PASSWORD
 * DB_CONNECTION_STRING
-
 NOTE: TARGET_DEVICE=PyPi should be the default, unless you update the device name entirely throughout the project. 
 
 ### b). Dependencies
-1. Express backend:
+For the Express backend:
 * axios
 * azure-iothub
 * body-parser
@@ -41,7 +40,7 @@ NOTE: TARGET_DEVICE=PyPi should be the default, unless you update the device nam
 * mongoose
 * node-schedule
 
-2. React frontend:
+For the React frontend:
 * testing-library/jest-dom
 * testing-library/react
 * testing-library/user-event
