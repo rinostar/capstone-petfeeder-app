@@ -25,7 +25,7 @@ Create .env file in root folder and update the the following variables according
 * DB_USERNAME
 * DB_PASSWORD
 * DB_CONNECTION_STRING
-NOTE: TARGET_DEVICE=PyPi should be the default, unless you update the device name entirely throughout the project. 
+<br />NOTE: TARGET_DEVICE=PyPi should be the default, unless you update the device name entirely throughout the project. 
 
 ### b). Dependencies
 For the Express backend:
